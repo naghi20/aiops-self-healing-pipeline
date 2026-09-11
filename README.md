@@ -10,7 +10,21 @@ in the loop.
 Most "monitoring" projects stop at a dashboard. This one closes the
 loop: **detect → correlate → explain → remediate → notify → track → verify**.
 That closed loop
-## Architecture
+
+# Key Infrastructure & Tech Stack
+Infrastructure as Code: Fully provisioned and managed using Terraform (>= 1.5).
+
+Compute & Application: AWS EC2 (t3.micro), Python Flask, AWS X-Ray SDK.
+
+Serverless Operations: AWS Lambda (Python), Amazon EventBridge, Amazon SNS.
+
+Storage & Databases: Amazon S3, Amazon DynamoDB (3 tables: CMDB Assets, RCA Findings, Incidents).
+
+Monitoring & Data Streaming: AWS CloudWatch (Metrics, Logs, Alarms), Kinesis Data Streams, Kinesis Firehose.
+
+Automation: AWS SSM Automation Documents.
+
+# Architecture
 
 <img width="1024" height="559" alt="image" src="https://github.com/user-attachments/assets/3b1854fe-8b00-4760-81fb-c6968c17d7e8" />
 
