@@ -15,6 +15,30 @@ That closed loop
 <img width="1024" height="559" alt="image" src="https://github.com/user-attachments/assets/3b1854fe-8b00-4760-81fb-c6968c17d7e8" />
 
 
+**The loop, in order:**
+1. **Ingest** — EC2 workload instrumented with the CloudWatch Agent (OS metrics,
+   app logs) and AWS X-Ray (traces). Logs stream via a Kinesis subscription
+   filter → Firehose → S3.
+2. **Detect** — CloudWatch's native ML Anomaly Detection bands watch CPU
+   utilization and application error rate; alarms fire only on out-of-band
+   values, not fixed thresholds.
+3. **Correlate + RCA** — An EventBridge rule routes alarm state changes to the
+   `correlation_rca` Lambda, which de-dupes repeat alarms within a 2-minute
+   window, looks up the affected resource in a DynamoDB CMDB, classifies a
+   probable root cause, and writes a finding to `RCA_Findings`.
+4. **Remediate** — For alarms on the high-confidence list, the same Lambda
+   kicks off an SSM Automation runbook that restarts the affected service —
+   no human approval step.
+5. **Notify** — The finding fans out over SNS to a `chatops_notifier` Lambda
+   that posts a formatted alert to Slack.
+6. **Track** — An `incident_lifecycle` Lambda opens a ticket in a DynamoDB
+   `Incidents` table on the same SNS fan-out, then a 5-minute EventBridge
+   sweep auto-closes it once the alarm returns to `OK`.
+
+
+
+
+
 ```mermaid
 flowchart LR
     subgraph Workload
@@ -45,26 +69,6 @@ flowchart LR
     SCHED[EventBridge: rate 5min] --> INC
     INC -->|health check + auto-close| TICKETS
 ```
-
-**The loop, in order:**
-1. **Ingest** — EC2 workload instrumented with the CloudWatch Agent (OS metrics,
-   app logs) and AWS X-Ray (traces). Logs stream via a Kinesis subscription
-   filter → Firehose → S3.
-2. **Detect** — CloudWatch's native ML Anomaly Detection bands watch CPU
-   utilization and application error rate; alarms fire only on out-of-band
-   values, not fixed thresholds.
-3. **Correlate + RCA** — An EventBridge rule routes alarm state changes to the
-   `correlation_rca` Lambda, which de-dupes repeat alarms within a 2-minute
-   window, looks up the affected resource in a DynamoDB CMDB, classifies a
-   probable root cause, and writes a finding to `RCA_Findings`.
-4. **Remediate** — For alarms on the high-confidence list, the same Lambda
-   kicks off an SSM Automation runbook that restarts the affected service —
-   no human approval step.
-5. **Notify** — The finding fans out over SNS to a `chatops_notifier` Lambda
-   that posts a formatted alert to Slack.
-6. **Track** — An `incident_lifecycle` Lambda opens a ticket in a DynamoDB
-   `Incidents` table on the same SNS fan-out, then a 5-minute EventBridge
-   sweep auto-closes it once the alarm returns to `OK`.
 
 ## Repo layout
 
