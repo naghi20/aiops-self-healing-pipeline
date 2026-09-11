@@ -1,16 +1,11 @@
 # AIOps Self-Healing Pipeline on AWS
 
-A working, end-to-end AIOps loop on AWS: a monitored workload streams telemetry,
+End-to-end AIOps loop on AWS: a monitored workload streams telemetry,
 CloudWatch's built-in ML anomaly detection flags abnormal behavior, a Lambda
 correlates and root-causes the alert, and the system automatically remediates
 itself, notifies Slack, and opens/closes its own ITSM ticket — with no human
 in the loop.
 
-> Built as a scoped, cost-safe implementation of a larger 3-lab AIOps
-> curriculum. See [What's not built yet](#whats-not-built-yet) for the
-> full-scope version (SageMaker forecasting, Lookout for Metrics, EKS).
-
-## Why this exists
 
 Most "monitoring" portfolio projects stop at a dashboard. This one closes the
 loop: **detect → correlate → explain → remediate → notify → track → verify**.
