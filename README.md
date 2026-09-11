@@ -1,15 +1,13 @@
 
 # AIOps Self-Healing Pipeline on AWS
 
+Instead of just collecting metrics and displaying them on a dashboard, this project creates an autonomous, closed-loop system that detects anomalies, identifies root causes, takes corrective action, sends alerts, and tracks incidents without requiring human intervention.
+
  A monitored workload streams telemetry,
 CloudWatch's built-in ML anomaly detection flags abnormal behavior, a Lambda
 correlates and root-causes the alert, and the system automatically remediates
 itself, notifies Slack, and opens/closes its own ITSM ticket — with no human
 in the loop.
-
-Most "monitoring" projects stop at a dashboard. This one closes the
-loop: **detect → correlate → explain → remediate → notify → track → verify**.
-That closed loop
 
 # Key Infrastructure & Tech Stack
 Infrastructure as Code: Fully provisioned and managed using Terraform (>= 1.5).
@@ -29,7 +27,7 @@ Automation: AWS SSM Automation Documents.
 <img width="1024" height="559" alt="image" src="https://github.com/user-attachments/assets/3b1854fe-8b00-4760-81fb-c6968c17d7e8" />
 
 
-**The loop, in order:**
+**Core Workflow (The Closed Loop):**
 1. **Ingest** — EC2 workload instrumented with the CloudWatch Agent (OS metrics,
    app logs) and AWS X-Ray (traces). Logs stream via a Kinesis subscription
    filter → Firehose → S3.
