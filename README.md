@@ -6,12 +6,9 @@ correlates and root-causes the alert, and the system automatically remediates
 itself, notifies Slack, and opens/closes its own ITSM ticket — with no human
 in the loop.
 
-
-Most "monitoring" portfolio projects stop at a dashboard. This one closes the
+Most "monitoring" projects stop at a dashboard. This one closes the
 loop: **detect → correlate → explain → remediate → notify → track → verify**.
-That closed loop — not any single AWS service — is the actual skill AIOps and
-platform engineering roles are hiring for.
-
+That closed loop
 ## Architecture
 
 ```mermaid
@@ -115,8 +112,7 @@ side while `fault_injection.sh` runs.)*
 
 ## What's not built yet
 
-This is a deliberately scoped weekend build. The full curriculum this is
-based on also includes, as natural v2 extensions:
+This is a deliberately scoped weekend build, as natural v2 extensions:
 - **SageMaker DeepAR forecasting** for 7-day capacity planning over the
   Athena/S3 archive.
 - **Amazon Lookout for Metrics** for business-metric anomaly detection
