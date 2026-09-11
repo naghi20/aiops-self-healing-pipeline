@@ -1,4 +1,5 @@
 # AIOps Self-Healing Pipeline on AWS
+<img width="1024" height="559" alt="image" src="https://github.com/user-attachments/assets/3b1854fe-8b00-4760-81fb-c6968c17d7e8" />
 
 End-to-end AIOps loop on AWS: a monitored workload streams telemetry,
 CloudWatch's built-in ML anomaly detection flags abnormal behavior, a Lambda
