@@ -1,4 +1,3 @@
-<img width="1024" height="559" alt="image" src="https://github.com/user-attachments/assets/3b1854fe-8b00-4760-81fb-c6968c17d7e8" />
 
 # AIOps Self-Healing Pipeline on AWS
 
@@ -12,6 +11,9 @@ Most "monitoring" projects stop at a dashboard. This one closes the
 loop: **detect → correlate → explain → remediate → notify → track → verify**.
 That closed loop
 ## Architecture
+
+<img width="1024" height="559" alt="image" src="https://github.com/user-attachments/assets/3b1854fe-8b00-4760-81fb-c6968c17d7e8" />
+
 
 ```mermaid
 flowchart LR
