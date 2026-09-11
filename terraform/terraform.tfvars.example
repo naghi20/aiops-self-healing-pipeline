@@ -1,0 +1,14 @@
+# Copy to terraform.tfvars and fill in before running terraform apply.
+
+aws_region   = "us-east-1"
+project_name = "aiops-demo"
+
+# REQUIRED: your IP in CIDR form, e.g. 203.0.113.4/32
+# Find it with: curl -s ifconfig.me
+my_ip_cidr = "REPLACE_ME/32"
+
+# Optional: existing EC2 key pair for SSH. Leave blank to use SSM Session Manager instead.
+key_pair_name = ""
+
+# Optional but needed for the ChatOps demo step.
+slack_webhook_url = ""

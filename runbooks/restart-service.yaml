@@ -1,0 +1,29 @@
+description: |
+  AIOps self-healing runbook: restarts the demo app service on the
+  target instance. Triggered automatically by the correlation_rca
+  Lambda for high-confidence findings.
+schemaVersion: "0.3"
+assumeRole: "{{ AutomationAssumeRole }}"
+parameters:
+  InstanceId:
+    type: String
+    description: EC2 instance to remediate
+  FindingId:
+    type: String
+    description: RCA finding that triggered this remediation
+    default: "manual"
+  AutomationAssumeRole:
+    type: String
+    description: IAM role ARN Automation assumes to run this document
+
+mainSteps:
+  - name: RestartAppService
+    action: aws:runCommand
+    inputs:
+      DocumentName: AWS-RunShellScript
+      InstanceIds:
+        - "{{ InstanceId }}"
+      Parameters:
+        commands:
+          - "systemctl restart aiops-demo-app"
+          - "echo Remediation for finding {{ FindingId }} complete"
